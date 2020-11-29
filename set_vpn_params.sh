@@ -6,8 +6,8 @@ function main() {
     publicIp=`echo "$ARGS" | getNamedArg publicIp`
     privateIp=`echo "$ARGS" | getNamedArg privateIp`
 
-    sed -i "s/^local.*/local $privateIp/" /home/taha/SoarRobotics_WS/test.conf
-    sed -i "s/^remote.*/remote $publicIp 1194/" /etc/openvpn/server/client-common.txt
+    sed -i "s/^local.*/local $privateIp/" /etc/openvpn/server/server.conf
+    sed -i "s/^remote .*/remote $publicIp 1194/" /etc/openvpn/server/client-common.txt
     if systemctl is-active --quiet firewalld.service; then
 		firewall-cmd --direct --add-rule ipv4 nat POSTROUTING 0 -s 10.8.0.0/24 ! -d 10.8.0.0/24 -j SNAT --to "$privateIp"
 		firewall-cmd --permanent --direct --add-rule ipv4 nat POSTROUTING 0 -s 10.8.0.0/24 ! -d 10.8.0.0/24 -j SNAT --to "$privateIp"
