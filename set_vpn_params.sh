@@ -35,7 +35,7 @@ ExecStop=$iptables_path -D FORWARD -m state --state RELATED,ESTABLISHED -j ACCEP
 WantedBy=multi-user.target" >> /etc/systemd/system/openvpn-iptables.service
 		systemctl enable --now openvpn-iptables.service
     fi
-    systemctl stop openvpn-server@server.service
+    systemctl restart openvpn-server@server.service
 }
 
 
