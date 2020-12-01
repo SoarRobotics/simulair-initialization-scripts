@@ -23,17 +23,17 @@ Before=network.target
 [Service]
 Type=oneshot
 ExecStart=$iptables_path -t nat -A POSTROUTING -s 10.8.0.0/24 ! -d 10.8.0.0/24 -j SNAT --to $privateIp
-ExecStart=$iptables_path -I INPUT -p $protocol --dport $port -j ACCEPT
+ExecStart=$iptables_path -I INPUT -p udp --dport 1194 -j ACCEPT
 ExecStart=$iptables_path -I FORWARD -s 10.8.0.0/24 -j ACCEPT
 ExecStart=$iptables_path -I FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
 ExecStop=$iptables_path -t nat -D POSTROUTING -s 10.8.0.0/24 ! -d 10.8.0.0/24 -j SNAT --to $privateIp
-ExecStop=$iptables_path -D INPUT -p $protocol --dport $port -j ACCEPT
+ExecStop=$iptables_path -D INPUT -p udp --dport 1194 -j ACCEPT
 ExecStop=$iptables_path -D FORWARD -s 10.8.0.0/24 -j ACCEPT
 ExecStop=$iptables_path -D FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT" > /etc/systemd/system/openvpn-iptables.service
 		echo "RemainAfterExit=yes
 [Install]
 WantedBy=multi-user.target" >> /etc/systemd/system/openvpn-iptables.service
-		systemctl enable --now openvpn-iptables.service
+		systemctl restart --now openvpn-iptables.service
     fi
     systemctl restart openvpn-server@server.service
 }
