@@ -1,0 +1,4 @@
+##Overview
+
+These scripts are used for initialization of the simulair instance along with the simulair-simulation-manager module.
+These scripts have to reside inside "/home/ubuntu/bash-scripts/simulair-initialization-scripts" directory.

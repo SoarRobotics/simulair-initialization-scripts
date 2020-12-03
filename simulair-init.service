@@ -1,0 +1,12 @@
+[Unit]
+After=cloud-init.target
+After=multi-user.target
+
+[Service]
+ExecStart=/home/ubuntu/bash-scripts/Simulair-initialization-scripts/init.sh
+User=ubuntu
+
+[Install]
+WantedBy=default.target
+
+

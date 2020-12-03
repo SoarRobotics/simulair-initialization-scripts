@@ -33,9 +33,19 @@ ExecStop=$iptables_path -D FORWARD -m state --state RELATED,ESTABLISHED -j ACCEP
 		echo "RemainAfterExit=yes
 [Install]
 WantedBy=multi-user.target" >> /etc/systemd/system/openvpn-iptables.service
-		systemctl restart --now openvpn-iptables.service
+
+    systemctl daemon-reload	
     fi
-    systemctl restart openvpn-server@server.service
+    if systemctl is-enabled --quiet openvpn-iptables.service; then
+        echo "iptables enabled!"
+    else    
+        systemctl enable --now openvpn-iptables.service
+        systemctl start --now openvpn-iptables.service
+    fi
+
+      systemctl restart openvpn-server@server.service    
+    
+
 }
 
 
