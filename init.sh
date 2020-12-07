@@ -15,7 +15,7 @@ if [ $? -eq 1 ]; then
     sudo /usr/bin/X :0 &
     echo "X Server has initialized" >> $logdir
 fi 
-fi
+
 export DISPLAY=:0
 source /opt/ros/dashing/setup.bash
 export ROS_DOMAIN_ID=42
